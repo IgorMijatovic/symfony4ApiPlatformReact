@@ -14,7 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
  * @ApiResource(
  *     itemOperations={
- *          "get",
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get-blog-with-author"}
+ *          }
+ *     },
  *          "put"={
  *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object.getAuthor() == user"
  *          }
@@ -36,19 +40,21 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"get-blog-with-author"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Groups({"post"})
+     * @Groups({"post", "get-blog-with-author"})
      * @Assert\Length(min="10")
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get-blog-with-author"})
      */
     private $published;
 
@@ -56,13 +62,14 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Length(min="20")
-     * @Groups({"post"})
+     * @Groups({"post", "get-blog-with-author"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"get-blog-with-author"})
      */
     private $author;
 
@@ -71,13 +78,14 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
      * @ApiSubresource()
      * i onda se prikazu svi comment a urlom http://127.0.0.1:8000/api/blog_posts/102/comments
      * koristit isto deboug:router
+     * @Groups({"get-blog-with-author"})
      */
     private $comments;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
-     * @Groups({"post"})
+     * @Groups({"post", "get-blog-with-author"})
      */
     private $slug;
 
