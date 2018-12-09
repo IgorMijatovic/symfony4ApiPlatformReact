@@ -127,6 +127,11 @@ class User implements UserInterface
      */
     private $oldPassword;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $passwordChangedDate;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -346,5 +351,16 @@ class User implements UserInterface
     {
         $this->oldPassword = $oldPassword;
     }
+
+    public function getPasswordChangedDate()
+    {
+        return $this->passwordChangedDate;
+    }
+
+    public function setPasswordChangedDate($passwordChangedDate): void
+    {
+        $this->passwordChangedDate = $passwordChangedDate;
+    }
+
 
 }
