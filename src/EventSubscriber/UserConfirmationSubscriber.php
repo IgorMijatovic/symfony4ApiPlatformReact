@@ -3,58 +3,25 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\UserConfirmation;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Security\UserConfirmationService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class UserConfirmationSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var UserRepository
+     * @var UserConfirmationService
      */
-    private $userRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $userConfirmationService;
 
-    /**
-     * UserConfirmationSubscriber constructor.
-     * @param UserRepository $userRepository
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(
-        UserRepository $userRepository,
-        EntityManagerInterface $entityManager
-    )
+    public function __construct(UserConfirmationService $userConfirmationService)
     {
-        $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
+        $this->userConfirmationService = $userConfirmationService;
     }
 
-    /**
-     * Returns an array of event names this subscriber wants to listen to.
-     *
-     * The array keys are event names and the value can be:
-     *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
-     *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
-     *
-     * For instance:
-     *
-     *  * array('eventName' => 'methodName')
-     *  * array('eventName' => array('methodName', $priority))
-     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-     *
-     * @return array The event names to listen to
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -73,16 +40,7 @@ class UserConfirmationSubscriber implements EventSubscriberInterface
         /** @var UserConfirmation $confirmationToken */
         $confirmationToken = $event->getControllerResult();
 
-        $user = $this->userRepository->findOneBy(['confirmationToken' => $confirmationToken->confirmationToken]);
-
-        //User was NOT found by confirmation token
-        if (!$user) {
-            throw new NotFoundHttpException();
-        }
-
-        $user->setEnabled(true);
-        $user->setConfirmationToken(null);
-        $this->entityManager->flush();
+        $this->userConfirmationService->confirmUser($confirmationToken);
 
         $event->setResponse(new JsonResponse(null, Response::HTTP_OK));
     }

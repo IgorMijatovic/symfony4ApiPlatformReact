@@ -2,6 +2,7 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Email\Mailer;
 use App\Entity\User;
 use App\Security\TokenGenerator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -21,45 +22,27 @@ class UserRegisterSubscriber implements EventSubscriberInterface
      */
     private $tokenGenerator;
     /**
-     * @var \Swift_Mailer
+     * @var Mailer
      */
-    private $swift_Mailer;
+    private $mailer;
 
     /**
      * UserRegisterSubscriber constructor.
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param TokenGenerator $tokenGenerator
-     * @param \Swift_Mailer $swift_Mailer
+     * @param Mailer $mailer
      */
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         TokenGenerator $tokenGenerator,
-        \Swift_Mailer $swift_Mailer
+        Mailer $mailer
     )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenGenerator = $tokenGenerator;
-        $this->swift_Mailer = $swift_Mailer;
+        $this->mailer = $mailer;
     }
 
-    /**
-     * Returns an array of event names this subscriber wants to listen to.
-     *
-     * The array keys are event names and the value can be:
-     *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
-     *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
-     *
-     * For instance:
-     *
-     *  * array('eventName' => 'methodName')
-     *  * array('eventName' => array('methodName', $priority))
-     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-     *
-     * @return array The event names to listen to
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -87,11 +70,7 @@ class UserRegisterSubscriber implements EventSubscriberInterface
         );
 
         //send email
-        $message= (new \Swift_Message('Hallo from api platform'))
-            ->setFrom('igor.swiftmailer@gmail.com')
-            ->setTo('igor.swiftmailer@gmail.com')
-            ->setBody('Hallo, how are you?');
 
-        $this->swift_Mailer->send($message);
+        $this->mailer->sendConfirmationEmail($user);
     }
 }
