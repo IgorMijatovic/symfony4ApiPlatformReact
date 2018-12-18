@@ -12,6 +12,7 @@ use App\Controller\UploadImageAction;
  * @ORM\Entity()
  * @Vich\Uploadable()
  * @ApiResource(
+ *     attributes={"order"={"id":"ASC"}},
  *     collectionOperations={
  *     "get",
  *     "post"={
@@ -19,7 +20,7 @@ use App\Controller\UploadImageAction;
  *          "path"="images",
  *          "controller"=UploadImageAction::class,
  *          "defaults"={"_api_receive"=false}
- *     }
+ *          }
  *     }
  * )
  */

@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  * @ApiResource(
+ *     attributes={"order"={"published":"DESC"}},
  *     itemOperations={
  *          "get",
  *          "put"={
