@@ -94,7 +94,7 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
      * join table heisst das die table image und blogpost nicht geändert sind sondern nur eine neu table mit zwei fields erstellt
      * @ORM\JoinTable()
      * @ApiSubresource()
-     * @Groups({"post"})
+     * @Groups({"post", "get-blog-with-author"})
      */
     private $images;
 
