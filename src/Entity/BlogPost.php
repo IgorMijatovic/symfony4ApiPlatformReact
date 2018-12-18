@@ -89,9 +89,19 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image")
+     * join table heisst das die table image und blogpost nicht geändert sind sondern nur eine neu table mit zwei fields erstellt
+     * @ORM\JoinTable()
+     * @ApiSubresource()
+     * @Groups({"post"})
+     */
+    private $images;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,11 +181,23 @@ class BlogPost implements AuthoredEntityInterface, PublishedDateEntityInterface
         return $this->comments;
     }
 
-    /**
-     * @param mixed $comments
-     */
     public function setComments($comments): void
     {
         $this->comments = $comments;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image)
+    {
+        $this->images->add($image);
+    }
+
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
     }
 }
