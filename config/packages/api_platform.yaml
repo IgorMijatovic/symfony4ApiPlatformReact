@@ -7,11 +7,18 @@ api_platform:
         pagination:
 #            enabled: false
 #            kann auch unter apiREsource eingetragen werden pagination_enabled: false ili pagination_client_enabled
-#            page_parameter_name: _page
+            page_parameter_name: _page
 #            client kann pagination=false schreiben
 #            client_enabled: true
 #            enabled_parameter_name: pagination
-            items_per_page: 4
+            items_per_page: 10
+            client_items_per_page: true # Disabled by default
+            items_per_page_parameter_name: itemsPerPage
+            maximum_items_per_page: 20
+#            for gain of performace only next will be shown
+            partial: false
+            client_partial: true
+            partial_parameter_name: 'partial'
 
 
 
