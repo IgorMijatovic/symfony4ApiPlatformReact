@@ -138,4 +138,8 @@ class Comment implements AuthoredEntityInterface, PublishedDateEntityInterface
         $this->blogPost = $blogPost;
     }
 
+    public function __toString(): string
+    {
+        return substr($this->content, 0, 20) . '....';
+    }
 }
