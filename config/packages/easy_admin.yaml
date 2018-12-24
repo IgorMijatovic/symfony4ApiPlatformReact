@@ -10,6 +10,14 @@ easy_admin:
             class: App\Entity\BlogPost
         Image:
             class: App\Entity\Image
+            list:
+                fields:
+                    - id
+                    - {property: 'url', type: 'image', label: 'Image'}
+                    - url
+            form:
+                fields:
+                    - {property: 'file', type: 'Vich\UploaderBundle\Form\Type\VichFileType'}
 #        - App\Entity\Comment
 #        - App\Entity\BlogPost
 #        - App\Entity\Image
