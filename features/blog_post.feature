@@ -1,6 +1,7 @@
 Feature: Manage blog post
   @createSchema
   Scenario: Create Blog Post
+    Given I am authenticated as "admin"
     When I add "Content-type" header equal to "application/ld+json"
     When I add "Accept" header equal to "application/ld+json"
     And I send a "POST" request to "/api/blog_posts" with body:
