@@ -16,6 +16,8 @@
 ###< lexik/jwt-authentication-bundle ###
 .idea/workspace.xml
 .idea/*
+.idea/php.xml
+
 
 ###> symfony/phpunit-bridge ###
 .phpunit
