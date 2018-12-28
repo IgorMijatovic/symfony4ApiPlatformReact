@@ -41,6 +41,12 @@
     "behatch/contexts": {
         "version": "3.2.0"
     },
+    "coduo/php-matcher": {
+        "version": "3.1.0"
+    },
+    "coduo/php-to-string": {
+        "version": "2.0.1"
+    },
     "container-interop/container-interop": {
         "version": "1.2.0"
     },
@@ -181,6 +187,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "openlss/lib-array2xml": {
+        "version": "0.0.10"
     },
     "pagerfanta/pagerfanta": {
         "version": "v2.0.1"
