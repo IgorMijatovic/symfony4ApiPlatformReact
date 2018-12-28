@@ -62,6 +62,17 @@ class FeatureContext extends \Behatch\Context\RestContext
         );
     }
 
+    /**
+     * @Then the json matches generated template:
+     */
+    public function theJsonMatchesGeneratedTemplate(PyStringNode $json)
+    {
+        $actual = $this->request->getContent();
+//        var_dump($actual);
+        $this->assertTrue(
+            $this->matcher->match($actual, $json->getRaw())
+        );
+    }
 
     /**
      * @BeforeScenario @createSchema
