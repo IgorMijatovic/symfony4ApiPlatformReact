@@ -15,8 +15,13 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 .idea/workspace.xml
+.idea/*
 
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> behat/symfony2-extension ###
+behat.yml
+###< behat/symfony2-extension ###
