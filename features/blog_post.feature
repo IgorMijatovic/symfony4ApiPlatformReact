@@ -90,35 +90,35 @@ Feature: Manage blog post
     }
     """
 
-#  @comment
-#  Scenario: Throws error when comment is invalid
-#    Given I am authenticated as "admin"
-#    When I add "Content-Type" header equal to "application/ld+json"
-#    And I add "Accept" header equal to "application/ld+json"
-#    And I send a "POST" request to "/api/comments" with body:
-#    """
-#    {
-#      "content": "",
-#      "blogPost": "/api/blog_posts/105"
-#    }
-#    """
-#    Then the response status code should be 400
-#    And the response should be in JSON
-#    And the json matches generated template:
-#    """
-#    {
-#        "@context": "/api/contexts/ConstraintViolationList",
-#        "@type": "ConstraintViolationList",
-#        "hydra:title": "An error occurred",
-#        "hydra:description": "Item not found for \"/api/blog_posts/105\".",
-#        "violations": [
-#            {
-#                "propertyPath": "",
-#                "message": "Item not found for \"/api/blog_posts/105\"."
-#            }
-#        ]
-#    }
-#    """
+  @comment
+  Scenario: Throws error when comment is invalid
+    Given I am authenticated as "admin"
+    When I add "Content-Type" header equal to "application/ld+json"
+    And I add "Accept" header equal to "application/ld+json"
+    And I send a "POST" request to "/api/comments" with body:
+    """
+    {
+      "content": "",
+      "blogPost": "/api/blog_posts/105"
+    }
+    """
+    Then the response status code should be 400
+    And the response should be in JSON
+    And the json matches generated template:
+    """
+    {
+        "@context": "/api/contexts/ConstraintViolationList",
+        "@type": "ConstraintViolationList",
+        "hydra:title": "An error occurred",
+        "hydra:description": "Item not found for \"/api/blog_posts/105\".",
+        "violations": [
+            {
+                "propertyPath": "",
+                "message": "Item not found for \"/api/blog_posts/105\"."
+            }
+        ]
+    }
+    """
 
   @createSchema
   Scenario: Throws an error when blog post is invalid
