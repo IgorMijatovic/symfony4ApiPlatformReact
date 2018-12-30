@@ -97,4 +97,15 @@ class FeatureContext extends \Behatch\Context\RestContext
             $this->fixtures
         ]);
     }
+
+    /**
+     * @BeforeScenario @image
+     */
+    public function prepareImages()
+    {
+        copy(
+            __DIR__.'/../fixtures/DJ.png',
+            __DIR__.'/../fixtures/files/DJ.png'
+        );
+    }
 }
